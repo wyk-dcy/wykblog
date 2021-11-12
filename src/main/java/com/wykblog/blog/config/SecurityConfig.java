@@ -48,7 +48,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/blog/vuefindByPage","/blog/getByBlogId",
+                .antMatchers("/blog/vuefindByPage","/blog/check","/blog/sendVerifyCode","/blog/register","/blog/getByBlogId",
                            "/type/getAllType","/tag/getAllTag","/blog/getByTitle",
                            "/comment/comments/{blogId}","/comment/comments",
                             "/blog/countBlog","/comment/getCommentByPage",

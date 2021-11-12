@@ -41,6 +41,9 @@ public class TUser implements Serializable,UserDetails {
     @ApiModelProperty(value = "邮箱")
     private String email;
 
+    @ApiModelProperty(value = "手机号")
+    private String telephone;
+
     @ApiModelProperty(value = "昵称")
     private String nickname;
 

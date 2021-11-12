@@ -16,4 +16,6 @@ import java.util.List;
 public interface TTypeMapper extends BaseMapper<TType> {
 
     List<TType> getAllType();
+
+    List<TType> getAll();
 }

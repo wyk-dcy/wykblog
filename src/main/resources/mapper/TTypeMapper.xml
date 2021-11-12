@@ -13,4 +13,9 @@
         from t_blog left join t_type t2 on t_blog.type_id = t2.id
         group by type_id
     </select>
+
+    <select id="getAll" resultMap="myGetAllTypeMap">
+        select id as type_id,name as t2name
+        from t_type;
+    </select>
 </mapper>

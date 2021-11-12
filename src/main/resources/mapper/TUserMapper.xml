@@ -7,13 +7,18 @@
         <result column="avatar" property="avatar" />
         <result column="createTime" property="createTime" />
         <result column="email" property="email"  />
+        <result column="telephone" property="telephone"  />
         <result column="nickname" property="nickname"  />
         <result column="password" property="password"  />
         <result column="type" property="type"  />
         <result column="updateTime" property="updateTime"  />
         <result column="username" property="username"  />
     </resultMap>
-
+    <!--添加评论-->
+    <insert id="save" parameterType="com.wykblog.blog.entity.TUser">
+        insert into t_user (avatar,create_time,email,telephone,avatar,nickname,password,type,update_time,username)
+        values (#{avatar},#{create_time},#{email},#{telephone},#{avatar},#{nickname},#{password},#{type},#{update_time},#{username});
+    </insert>
     <!--  根据用户名查询用户-->
     <select id="loadUserByUsername" resultMap="BaseResultMap">
         select * from t_user where username=#{username}

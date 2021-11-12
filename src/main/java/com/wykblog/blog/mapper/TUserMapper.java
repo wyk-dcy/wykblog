@@ -13,4 +13,6 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface TUserMapper extends BaseMapper<TUser> {
    TUser loadUserByUsername(String username);
+
+   int save(TUser tUser);
 }

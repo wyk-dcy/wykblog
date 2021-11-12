@@ -103,4 +103,13 @@ public class TTypeServiceImpl extends ServiceImpl<TTypeMapper, TType> implements
         respBean.setObj(tType);
         return respBean;
     }
+
+    @Override
+    public RespBean getAll() {
+        RespBean respBean = RespBean.build();
+        List<TType> tType = tTypeMapper.getAll();
+        respBean.setStatus(200);
+        respBean.setObj(tType);
+        return respBean;
+    }
 }

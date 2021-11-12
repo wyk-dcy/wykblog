@@ -75,6 +75,16 @@ public class TTypeController {
     }
 
     /**
+     * 查询所有分类
+     * @return
+     */
+    @GetMapping("/getAll")
+    public RespBean getAll(){
+//        List<TType> typeList = tTypeService.list();
+        return tTypeService.getAll();
+    }
+
+    /**
      * 分类的分页查询
      * @param current
      * @param size

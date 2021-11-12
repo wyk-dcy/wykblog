@@ -26,5 +26,7 @@ public interface TTypeService extends IService<TType> {
 
     RespBean getAllType();
 
+    RespBean getAll();
+
 
 }
