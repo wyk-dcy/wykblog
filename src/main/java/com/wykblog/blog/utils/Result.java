@@ -1,43 +1,75 @@
 package com.wykblog.blog.utils;
 
-import lombok.Data;
-
 import java.io.Serializable;
 
-@Data
-public class Result implements Serializable {
-    private String code;
-    private String msg;
-    private Object data;
-    public static Result succ(Object data) {
-        Result m = new Result();
-        m.setCode("0");
-        m.setData(data);
-        m.setMsg("操作成功");
-        return m;
+/**
+ * @author wuyongkang
+ * @since 2020-11-30
+ */
+public class Result<T> implements Serializable {
+
+    private static final long serialVersionUID = -8634188470570468389L;
+    private boolean success = false;
+    private T data = null;
+    private String msg = "";
+    private String code = "500";
+
+    public Result() {
     }
-    public static Result succ(String mess, Object data) {
-        Result m = new Result();
-        m.setCode("0");
-        m.setData(data);
-        m.setMsg(mess);
-        return m;
+
+    @SuppressWarnings("unchecked")
+    public static <T> Result<T> success(T data) {
+        Result<T> r = new Result();
+        r.setData(data);
+        r.setSuccess(true);
+        r.setCode("200");
+        r.setMsg("success");
+        return r;
     }
-    public static Result fail(String mess) {
-        Result m = new Result();
-        m.setCode("-1");
-        m.setData(null);
-        m.setMsg(mess);
-        return m;
+
+    @SuppressWarnings("unchecked")
+    public static <T> Result<T> fail(String code, String msg) {
+        Result<T> r = new Result();
+        r.setSuccess(false);
+        r.setCode(code);
+        r.setMsg(msg);
+        return r;
     }
-    public static Result fail(String mess, Object data) {
-        Result m = new Result();
-        m.setCode("-1");
-        m.setData(data);
-        m.setMsg(mess);
-        return m;
+
+    public boolean isSuccess() {
+        return this.success;
+    }
+
+    public Result<T> setSuccess(boolean success) {
+        this.success = success;
+        return this;
+    }
+
+    public T getData() {
+        return this.data;
+    }
+
+    public Result<T> setData(T data) {
+        this.data = data;
+        return this;
+    }
+
+    public String getMsg() {
+        return this.msg;
+    }
+
+    public Result<T> setMsg(String msg) {
+        this.msg = msg;
+        return this;
+    }
+
+    public String getCode() {
+        return this.code;
+    }
+
+    public Result<T> setCode(String code) {
+        this.code = code;
+        return this;
     }
 }
-
-
 

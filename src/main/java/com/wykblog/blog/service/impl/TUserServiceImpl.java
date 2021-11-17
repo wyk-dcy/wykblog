@@ -5,6 +5,8 @@ import com.wykblog.blog.entity.TUser;
 import com.wykblog.blog.mapper.TUserMapper;
 import com.wykblog.blog.service.TUserService;
 import com.wykblog.blog.utils.RespBean;
+import com.wykblog.blog.utils.exception.ErrorCodes;
+import com.wykblog.blog.utils.exception.Exceptions;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -26,27 +28,27 @@ public class TUserServiceImpl extends ServiceImpl<TUserMapper, TUser> implements
 
 
     @Override
-    public RespBean check(String username) {
-        RespBean respBean = RespBean.build();
-        respBean.setMsg("用户名是否存在");
-        respBean.setStatus(200);
-        respBean.setObj(Objects.isNull(tUserMapper.loadUserByUsername(username)));
-        return respBean;
+    public boolean check(String username) {
+        return Objects.isNull(tUserMapper.loadUserByUsername(username));
     }
 
     @Override
-    public RespBean addUser(TUser tUser) {
-        RespBean respBean = RespBean.build();
+    public void addUser(TUser tUser) {
         tUser.setCreateTime(LocalDateTime.now());
+        tUser.setUpdateTime(LocalDateTime.now());
         tUser.setAvatar("https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2070453827,1163403148&fm=26&gp=0.jpg");
         tUser.setNickname(tUser.getUsername());
         tUser.setType(1);
-        if (tUserMapper.save(tUser) == 1) {
-            respBean.setMsg("注册账号成功");
-            respBean.setStatus(200);
-            return respBean;
+        if (tUserMapper.insert(tUser) != 1) {
+            throw Exceptions.fail(ErrorCodes.PARAM_ERROR, "请先绑定手机号码");
         }
-        respBean.setMsg("注册账号失败");
-        return respBean;
+    }
+
+    @Override
+    public TUser login(String username, String password) {
+        if(Objects.isNull(tUserMapper.getUser(username,password))){
+            throw Exceptions.fail(ErrorCodes.PARAM_ERROR, "用户不存在");
+        }
+        return tUserMapper.getUser(username,password);
     }
 }

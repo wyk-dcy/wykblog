@@ -2,25 +2,29 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.wykblog.blog.mapper.TUserMapper">
 
-    <resultMap id="BaseResultMap" type="com.wykblog.blog.entity.TUser" >
-        <id column="id" property="id" />
-        <result column="avatar" property="avatar" />
-        <result column="createTime" property="createTime" />
-        <result column="email" property="email"  />
-        <result column="telephone" property="telephone"  />
-        <result column="nickname" property="nickname"  />
-        <result column="password" property="password"  />
-        <result column="type" property="type"  />
-        <result column="updateTime" property="updateTime"  />
-        <result column="username" property="username"  />
+    <resultMap id="BaseResultMap" type="com.wykblog.blog.entity.TUser">
+        <id column="id" property="id"/>
+        <result column="avatar" property="avatar"/>
+        <result column="create_time" property="createTime"/>
+        <result column="email" property="email"/>
+        <result column="telephone" property="telephone"/>
+        <result column="nickname" property="nickname"/>
+        <result column="password" property="password"/>
+        <result column="type" property="type"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="username" property="username"/>
     </resultMap>
-    <!--添加评论-->
-    <insert id="save" parameterType="com.wykblog.blog.entity.TUser">
-        insert into t_user (avatar,create_time,email,telephone,avatar,nickname,password,type,update_time,username)
-        values (#{avatar},#{create_time},#{email},#{telephone},#{avatar},#{nickname},#{password},#{type},#{update_time},#{username});
-    </insert>
     <!--  根据用户名查询用户-->
     <select id="loadUserByUsername" resultMap="BaseResultMap">
-        select * from t_user where username=#{username}
-   </select>
+        select *
+        from t_user
+        where username = #{username}
+    </select>
+
+    <!--  根据用户名密码查询用户-->
+    <select id="getUser" resultMap="BaseResultMap">
+        select *
+        from t_user
+        where username = #{username} and password=#{password}
+    </select>
 </mapper>

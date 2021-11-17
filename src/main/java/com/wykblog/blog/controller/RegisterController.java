@@ -4,6 +4,7 @@ import com.wykblog.blog.entity.TUser;
 import com.wykblog.blog.manage.MessageManage;
 import com.wykblog.blog.service.TUserService;
 import com.wykblog.blog.utils.RespBean;
+import com.wykblog.blog.utils.Result;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
@@ -28,13 +29,20 @@ public class RegisterController {
 
     @PostMapping("/register")
     @ApiOperation("用户注册")
-    public RespBean register(@RequestBody TUser tUser, String verifyCode) {
-        RespBean respBean = RespBean.build();
-        respBean.setObj(messageManage.checkVerifyCode(tUser.getTelephone(), verifyCode));
-        if (messageManage.checkVerifyCode(tUser.getTelephone(), verifyCode)) {
-            tUserService.addUser(tUser);
-        }
-        return respBean;
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "username", value = "用户名"),
+            @ApiImplicitParam(name = "password", value = "密码"),
+            @ApiImplicitParam(name = "telephone", value = "手机号"),
+            @ApiImplicitParam(name = "code", value = "验证码"),
+    })
+    public Result<String> register(String username, String password, String telephone, String code) {
+        //respBean.setObj(messageManage.checkVerifyCode(telephone, code));
+        TUser tUser = new TUser();
+        tUser.setUsername(username);
+        tUser.setPassword(password);
+        tUser.setTelephone(telephone);
+        tUserService.addUser(tUser);
+        return Result.success(null);
     }
 
     @PostMapping("/check")
@@ -42,8 +50,8 @@ public class RegisterController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "username", value = "用户名"),
     })
-    public RespBean register(String username) {
-        return tUserService.check(username);
+    public Result<Boolean> check(String username) {
+        return Result.success(tUserService.check(username));
     }
 
     @ApiOperation("发送验证码")
@@ -51,9 +59,9 @@ public class RegisterController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "telephone", value = "手机号"),
     })
-    public RespBean sendVerifyCode(String telephone) {
+    public Result<String> sendVerifyCode(String telephone) {
         this.messageManage.sendRelayMessage(telephone, 6, 60);
-        return null;
+        return Result.success(null);
     }
 
 }

@@ -15,7 +15,9 @@ import com.wykblog.blog.utils.RespBean;
 
 public interface TUserService extends IService<TUser>  {
 
-    RespBean check(String username);
+    boolean check(String username);
 
-    RespBean addUser(TUser tUser);
+    void addUser(TUser tUser);
+
+    TUser login(String username, String password);
 }
