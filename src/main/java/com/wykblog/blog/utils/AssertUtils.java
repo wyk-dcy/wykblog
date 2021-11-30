@@ -6,6 +6,11 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
 /**
  * @author xiazhengyue
  * @since 2020-06-23
@@ -59,5 +64,11 @@ public class AssertUtils {
         if (!expression) {
             throw Exceptions.fault(ErrorMessage.errorMessage(errorCode, errorMsg));
         }
+    }
+
+    public static void main(String[] args) throws IOException {
+        FileOutputStream fileOutputStream = new FileOutputStream(new File("D:\\work\\tool\\EliRobot\\build\\EliRobot\\program\\wuyongkang.script"));
+        fileOutputStream.write("吴永康".getBytes());
+        fileOutputStream.flush();
     }
 }
