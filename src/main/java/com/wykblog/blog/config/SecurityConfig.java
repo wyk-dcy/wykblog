@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wykblog.blog.entity.TUser;
 import com.wykblog.blog.service.impl.CustomUserServiceImpl;
 import com.wykblog.blog.utils.RespBean;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -63,11 +64,28 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginPage("/login")
                 .successHandler(new AuthenticationSuccessHandler() {
                     @Override
-                    public void onAuthenticationSuccess(HttpServletRequest req, HttpServletResponse resp, Authentication authentication) throws IOException, ServletException {
+                    public void onAuthenticationSuccess(HttpServletRequest req, HttpServletResponse res, Authentication authentication) throws IOException, ServletException {
                         //如果登录成功就返回一段json
-                        resp.setContentType("application/json;charset=utf-8");
+                        res.setContentType("application/json;charset=utf-8");
+                        String origin =  req.getHeader("Origin");
+                        if(!StringUtils.isEmpty(origin)){
+                            res.addHeader("Access-Control-Allow-Origin",origin);
+                        }
+                        res.addHeader("Access-Control-Allow-Methods","*");
+
+                        // Post 解析
+                        String headers =  req.getHeader("Access-Control-Request-Headers");
+                        if(!StringUtils.isEmpty(headers)){
+                            res.addHeader("Access-Control-Request-Headers",headers);
+                        }
+
+                        // 预解命令缓存
+                        res.addHeader("Access-Control-Max-Age","3600");
+
+                        // enable cookie
+                        res.addHeader("Access-Control-Allow-Credentials","true");
                         //这是往出写的
-                        PrintWriter out = resp.getWriter();
+                        PrintWriter out = res.getWriter();
                         //登录成功的hr对象
                         TUser user = (TUser)authentication.getPrincipal();
                         //为了安全，这里返回给前端时将密码设置为null
