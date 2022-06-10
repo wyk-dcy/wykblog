@@ -1,13 +1,13 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://106.14.212.26:3306/blog?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=Asia/Shanghai
-    username: root
+    url: jdbc:mysql://124.221.244.201:3306/blog?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=Asia/Shanghai
+    username: dongchunyan
     password: 123456
   mvc:
     static-path-pattern: /**
   redis:
-    host: 106.14.212.26
+    host: 124.221.244.201
     port: 6379
     password: 123456
 
@@ -15,7 +15,7 @@ spring:
 mybatis-plus:
   mapper-locations: classpath*:/mapper/**Mapper.xml
 server:
-  port: 8081
+  port: 8082
 
 comment.avatar: /images/avatar.jpg
 message.avatar: /images/avatar.jpg
